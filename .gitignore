@@ -1,0 +1,12 @@
+#   Custom ignore
+
+files/
+
+**/packages/
+**/node_modules/
+**/bower_components/
+
+**/*.ffs_db
+**/desktop.ini
+
+**/*.sublime-*
