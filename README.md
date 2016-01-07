@@ -63,4 +63,20 @@ Web-based file manager
     dir1 | read, write
     dir1/sub1 | read
 
-    If sub1 is renamed to sub2 user1 will get write permission for that directory. **A warning message should be displayed when the administrator gives more restircted permissions for a subfolder. It must be ensured that the folder name is not changed.**
+    If sub1 is renamed to sub2 user1 will get write permission for that directory. **A warning message should be displayed when the administrator gives more restircted permissions for a subfolder. It must be ensured that the folder name is not changed ор хандлед цо.**
+
+## Site pages
+
+#### PUBLIC:
+1. Home (show statistics etc.)
+1. Register - todorm85 - DONE!
+1. Login - todorm85 - DONE!
+1. Browse dirs (authentiacated users are also able to see private files, that they have permissions for) - todorm85
+
+#### STANDART:
+1. List my uploaded files (also able to delete them)
+1. Upload files to dir (users are automatically granted permissions to files that they upload)
+
+#### ADMINISTRATOR:
+1. Add new user
+1. Edit existing user settings
