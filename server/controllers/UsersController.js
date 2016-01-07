@@ -23,9 +23,11 @@ module.exports = {
 
         users.create(newUserData, function(err, user) {
             if (err) {
-                console.log('Failed to register new user: ' + err);
-                res.status(400);
-                return res.send({reason: err.toString()});
+                req.session.error = 'Failed to register new user.' +
+                    ' Perhaps already registered.' + 
+                    '\r\nerror: ' + err.errmsg;
+                res.redirect('/');
+                return;
             }
 
             req.logIn(user, function(err) {
