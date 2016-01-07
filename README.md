@@ -71,7 +71,7 @@ Web-based file manager
 1. Home (show statistics etc.)
 1. Register - todorm85 - DONE!
 1. Login - todorm85 - DONE!
-1. Browse dirs (authentiacated users are also able to see private files, that they have permissions for) - todorm85
+1. Browse dirs (authentiacated users are able to see private folders, that they have permissions for, unauthenticated users are able to see only files inside folder public) - todorm85
 
 #### STANDART:
 1. List my uploaded files (also able to delete them)
