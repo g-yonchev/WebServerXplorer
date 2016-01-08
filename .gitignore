@@ -1,7 +1,7 @@
 #   Custom ignore
 
 files/
-
+.idea
 **/packages/
 **/node_modules/
 **/bower_components/
