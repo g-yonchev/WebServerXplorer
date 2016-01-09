@@ -10,6 +10,8 @@ module.exports = function(app) {
     
     app.get('/logout', auth.isAuthenticated, auth.logout);
 
+    app.get('/dir-list-public', controllers.storage.getDirListPublic);
+    
     app.get('/', function (req, res) {
         res.render('index');
     });

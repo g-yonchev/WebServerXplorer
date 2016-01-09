@@ -11,9 +11,7 @@ module.exports = {
             fs.mkdirSync(FILES_DIR + path + dirName);
         } catch (e) {
             console.log(e);
-            if (e.code === 'EEXIST') {
-                // todo: clear user dir
-            } else {
+            if (e.code !== 'EEXIST') {
                 throw e;
             }
         }
@@ -29,18 +27,24 @@ module.exports = {
         file.pipe(fstream);
     },
 
-    // returns a list of paths to files
-    readDir: function (path, cb) {
-        fs.readdir(path, function (err, contents) {
-            if (err) {
-                throw err;
-            }
+    // returns a list of paths to files and dirs
+    readDir: function (path) {
+        path = FILES_DIR + path || FILES_DIR;
 
-            contents = contents.map(function (contentName) {
-                return path + contentName;
+        return new Promise(function (resolve, reject) {
+
+            fs.readdir(path, function (err, contents) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                contents = contents.map(function (contentName) {
+                    return contentName;
+                });
+
+                resolve(contents);
             });
-
-            cb(contents);
         });
     }
 };
