@@ -17,5 +17,9 @@ module.exports = {
         var decipher = crypto.createDecipher("aes192", key);
         var decryptedData = decipher.update(data, "hex", "binary");
         return (decryptedData + decipher.final("binary"));
+    },
+    generateRandomText: function(size){
+        size = size || 10;
+        return crypto.randomBytes(size).toString('hex');
     }
 };

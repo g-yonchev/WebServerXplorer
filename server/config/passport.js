@@ -4,7 +4,8 @@ var User = require('mongoose').model('user');
 
 module.exports = function() {
     passport.use(new LocalPassport(function(username, password, done) {
-        User.findOne({ username: username }).exec(function(err, user) {
+        var criteria = (username.indexOf('@') === -1) ? {username: username} : {email: username};
+        User.findOne(criteria).exec(function(err, user) {
             if (err) {
                 console.log('Error loading user: ' + err);
                 return;

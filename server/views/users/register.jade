@@ -6,6 +6,11 @@ block main-content
 
         br
 
+        label(for="email") Username
+        input(id="email" type="email" name="email" placeholder="E-mail" class ="form-control")
+
+        br
+
         label(for="password") Password
         input(id="password" type="password" name="password" placeholder="password" class ="form-control")
 
@@ -13,6 +18,13 @@ block main-content
 
         label(for="confirm-password") Confirm Password
         input(id="confirm-password" type="password" name="confirmPassword" placeholder="Confirm Password" class ="form-control")
+
+        br
+
+        label(for="role") Role
+        select(id="role" name="role" class ="form-control")
+            option(value="standard") Standard
+            option(value="admin") Admin
 
         br
 

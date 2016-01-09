@@ -20,11 +20,13 @@ module.exports = {
 
         newUserData.salt = encryption.generateSalt();
         newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
+        newUserData.roles =[];
+        newUserData.roles.push(newUserData.role);
 
         users.create(newUserData, function(err, user) {
             if (err) {
                 req.session.error = 'Failed to register new user.' +
-                    ' Perhaps already registered.' + 
+                    ' Perhaps already registered.' +
                     '\r\nerror: ' + err.errmsg;
                 res.redirect('/');
                 return;

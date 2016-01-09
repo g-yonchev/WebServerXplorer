@@ -8,6 +8,11 @@ module.exports.init = function () {
             require: '{PATH} is required',
             unique: true
         },
+        email:{
+            type: String,
+            require: '{PATH} is required',
+            unique: true
+        },
         salt: String,
         hashPass: String,
         roles: [String]
