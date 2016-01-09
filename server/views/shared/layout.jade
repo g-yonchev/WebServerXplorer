@@ -9,22 +9,31 @@ html
             .container-fluid
                 .navbar-header
                     button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
-                        span(class="sr-only">Toggle navigation)
+                        span(class="sr-only" > Toggle navigation)
                         span(class="icon-bar")
                         span(class="icon-bar")
                         span(class="icon-bar")
                     a.navbar-brand(href="/") HOME
                 .collapse.navbar-collapse#bs-example-navbar-collapse-1
-                    ul.nav.navbar-nav
+                    ul.nav.navbar-nav.navbar-right
                         if (currentUser)
-                            li
-                                a(href="/profile") #{currentUser.username}
-                            li
-                                a(href="/logout") Logout
+                            li.dropdown
+                                a.dropdown-toggle(href="", data-toggle="dropdown")
+                                    | #{currentUser.username}
+                                    span.caret
+                                ul.dropdown-menu
+
+                                    if(currentUser.isAdmin)
+                                        li
+                                            a(href="/admin") Admin
+                                        li
+                                            a(href="/register") Register new user
+                                    li
+                                        a(href="/profile") Profile
+                                li
+                                    a(href="/logout") Logout
                         else
-                            li
-                                a(href="/register") Register
-                            li
+                             li
                                 a(href="/login") Login
 
         .container

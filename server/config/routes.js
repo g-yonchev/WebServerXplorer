@@ -2,8 +2,8 @@ var auth = require('./auth'),
     controllers = require('../controllers');
 
 module.exports = function(app) {
-    app.get('/register', controllers.users.getRegister);
-    app.post('/register', controllers.users.postRegister);
+    app.get('/register', auth.isInRole('admin'), controllers.users.getRegister);
+    app.post('/register', auth.isInRole('admin'), controllers.users.postRegister);
 
     app.post('/login', auth.login);
     app.get('/login', controllers.users.getLogin);

@@ -9,7 +9,8 @@ module.exports.init = function () {
             unique: true
         },
         salt: String,
-        hashPass: String
+        hashPass: String,
+        roles: [String]
     });
 
     userSchema.method({
