@@ -17,6 +17,7 @@ module.exports = function(app) {
     // STORAGE
     app.get('/files', controllers.storage.getDir);
     app.get('/files/:id', controllers.storage.getDir);
+    app.get('/download/:id', controllers.storage.getFile);
 
     // DEFAULT
     app.get('*', function(req, res) {

@@ -1,16 +1,27 @@
 extends ../shared/layout
 block main-content
-    table.table.table-bordered
-            tr
-                th
-                    | Name
-            
-            each dir in dirs
-                tr
-                    td
-                        a(href="/files/#{dir.path}") #{dir.name}
+    .container
+        .row
+            h3 Path: #{path}
+        .row: .col-md-6
+            a(href="/files/#{parent}") GO UP
+            table.table.table-bordered
+                    tr
+                        th
+                            | Name
+                        th
+                            | Type
+                    
+                    each dir in dirs
+                        tr
+                            td
+                                a(href="/files/#{dir.path}") #{dir.name}
+                            td
+                                | Directory
 
-            each file in files
-                tr
-                    td
-                        a(href="/download/#{file.path}") #{file.name}
+                    each file in files
+                        tr
+                            td
+                                a(href="/download/#{file.path}") #{file.name}
+                            td
+                                | File

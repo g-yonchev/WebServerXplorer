@@ -20,4 +20,12 @@ module.exports = {
                  res.redirect('/');
             });
     },
+    getFile: function (req, res, next) {
+        res.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        res.end(`<html><head></head><body>
+               <h1>File download functionality not added yet!</h1>
+            </body></html>`);
+    }
 };

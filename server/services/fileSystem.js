@@ -73,8 +73,10 @@ module.exports = {
                         };
                     });
                 dirs = dirs || [];
-                
+
                 resolve({
+                    parent: pathSvc.dirname(path).replace(/[/]/g, '%2F'),
+                    path,
                     dirs,
                     files
                 });
