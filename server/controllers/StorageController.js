@@ -11,7 +11,7 @@ module.exports = {
             urlSafePath = 'public';
         }
 
-        var path = urlSafePath.replace(/%2F/g, '/');
+        var path = urlSafePath.replace(/%2F|%20/g, '/');
         fsSvc.readDir(`${path}`)
             .then(function (filesAndFolders) {
                 res.render(`${CONTROLLER_NAME}/dir-list`, filesAndFolders);
