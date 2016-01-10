@@ -1,0 +1,11 @@
+extends ../shared/layout
+block main-content
+    table.table.table-bordered
+            tr
+                th
+                    | Name
+            
+            each path in paths
+                tr
+                    td
+                        | #{path}

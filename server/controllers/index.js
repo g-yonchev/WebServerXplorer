@@ -1,5 +1,7 @@
 var UsersController = require('./UsersController');
+var StorageController = require('./StorageController');
 
 module.exports = {
-    users: UsersController
+    users: UsersController,
+    storage: StorageController
 };

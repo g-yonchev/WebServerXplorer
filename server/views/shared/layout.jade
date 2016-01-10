@@ -16,6 +16,8 @@ html
                     a.navbar-brand(href="/") HOME
                 .collapse.navbar-collapse#bs-example-navbar-collapse-1
                     ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href="/dir-list-public") Storage
                         if (currentUser)
                             li.dropdown
                                 a.dropdown-toggle(href="", data-toggle="dropdown")
@@ -33,7 +35,7 @@ html
                                 li
                                     a(href="/logout") Logout
                         else
-                             li
+                            li
                                 a(href="/login") Login
 
         .container
