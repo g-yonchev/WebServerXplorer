@@ -5,7 +5,12 @@ block main-content
                 th
                     | Name
             
-            each path in paths
+            each dir in dirs
                 tr
                     td
-                        | #{path}
+                        a(href="/files/#{dir.path}") #{dir.name}
+
+            each file in files
+                tr
+                    td
+                        a(href="/download/#{file.path}") #{file.name}
