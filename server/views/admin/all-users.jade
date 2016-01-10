@@ -1,0 +1,19 @@
+extends ../shared/layout
+block main-content
+
+    table.table.table-bordered.table-striped.table-hover
+        tr.warning
+            th
+                | User
+            th
+                | Edit
+
+        - var i = -1
+        each user in users
+            - ++i
+            tr(class=(i % 2) ? '' : 'info')
+                td
+                    | #{user.email}
+
+                td
+                    a.glyphicon.glyphicon-search(href="/admin/user/edit/" + user._id)

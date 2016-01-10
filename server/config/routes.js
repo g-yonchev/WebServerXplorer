@@ -7,6 +7,9 @@ module.exports = function(app) {
 
     app.post('/login', auth.login);
     app.get('/login', controllers.users.getLogin);
+
+    app.get('/admin/users', controllers.admin.getAllUsers);
+    app.get('/admin/user/edit/:id', controllers.admin.editUser);
     
     app.get('/logout', auth.isAuthenticated, auth.logout);
 

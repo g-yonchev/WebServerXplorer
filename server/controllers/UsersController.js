@@ -11,7 +11,7 @@ module.exports = {
     getRegister: function (req, res, next) {
         res.render(`${CONTROLLER_NAME}/register`);
     },
-    postRegister: function(req, res, next) {
+    postRegister: function (req, res, next) {
         var newUserData = req.body;
 
         if (newUserData.password != newUserData.confirmPassword) {
@@ -21,10 +21,10 @@ module.exports = {
 
         newUserData.salt = encryption.generateSalt();
         newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-        newUserData.roles =[];
+        newUserData.roles = [];
         newUserData.roles.push(newUserData.role);
 
-        users.create(newUserData, function(err, user) {
+        users.create(newUserData, function (err, user) {
             if (err) {
                 req.session.error = 'Failed to register new user.' +
                     ' Perhaps already registered.' +
@@ -43,11 +43,11 @@ module.exports = {
             //});
 
             mail.register(user)
-                .then(function(message){
+                .then(function (message) {
                     //TODO success message
                     req.session.error = message;
                     res.redirect('/');
                 })
         });
-    },
+    }
 };
