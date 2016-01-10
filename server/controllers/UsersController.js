@@ -1,5 +1,6 @@
 var encryption = require('../services/encryption');
 var users = require('../services/users');
+var mail = require('../services/mail');
 
 var CONTROLLER_NAME = 'users';
 
@@ -32,14 +33,21 @@ module.exports = {
                 return;
             }
 
-            req.logIn(user, function(err) {
-                if (err) {
-                    res.status(400);
-                    return res.send({reason: err.toString()});
-                } else {
+            //req.logIn(user, function(err) {
+            //    if (err) {
+            //        res.status(400);
+            //        return res.send({reason: err.toString()});
+            //    } else {
+            //        res.redirect('/');
+            //    }
+            //});
+
+            mail.register(user)
+                .then(function(message){
+                    //TODO success message
+                    req.session.error = message;
                     res.redirect('/');
-                }
-            });
+                })
         });
     },
 };

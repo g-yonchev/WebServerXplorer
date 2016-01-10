@@ -1,4 +1,4 @@
-var email = require("email");
+var email = require('../../../node_modules/emailjs/email');
 var Promise = require('bluebird');
 
 var server = email.server.connect({
@@ -9,17 +9,16 @@ var server = email.server.connect({
 });
 
 module.exports = {
-    sendMail: function (mail) {
+    send: function (to, text) {
         var promise = new Promise(function (resolve, reject) {
             server.send({
-                text: mail.text,
+                text: "",
                 from: "webxserverxplorer@abv.bg",
-                to: mail.to,
+                to: to,
                 cc: "",
                 subject: "testing emailjs",
                 attachment: [
-                    //TODO: html for the messages
-                    {data: "<html>i <i>hope</i> this works!</html>", alternative: true}
+                    {data: text, alternative: true}
                 ]
             }, function (err, message) {
                 if (err) {
