@@ -1,27 +1,30 @@
-var email = require('../../../node_modules/emailjs/email');
-var Promise = require('bluebird');
+var nodemailer = require('nodemailer');
+var smtpPool = require('nodemailer-smtp-pool');
 
-var server = email.server.connect({
-    user: "webxserverxplorer@abv.bg",
-    password: "123456sedem",
-    host: "smtp.abv.bg",
-    ssl: true,
-    port: 465
-});
+var transporter = nodemailer.createTransport(smtpPool({
+    host: 'smtp.abv.bg',
+    secure: true,
+    port: 465,
+    auth: {
+        user: 'webxserverxplorer@abv.bg',
+        pass: '123456sedem'
+    }
+}, {
+    from: 'webxserverxplorer@abv.bg',
+    headers: {
+        'My-Awesome-Header': '123'
+    }
+}));
 
 module.exports = {
     send: function (to, text) {
         console.log(to);
         return new Promise(function (resolve, reject) {
-            server.send({
-                text: "",
-                from: "webxserverxplorer@abv.bg",
+            transporter.sendMail({
+                from: 'webxserverxplorer@abv.bg',
                 to: to,
-                cc: "",
-                subject: "testing emailjs",
-                attachment: [
-                    {data: text, alternative: true}
-                ]
+                subject: '',
+                html: text
             }, function (err, message) {
                 if (err) {
                     reject(err);
