@@ -1,0 +1,14 @@
+extends ../shared/layout
+
+block main-content
+    button#add-input-file More files
+    br
+    br
+    form#form-upload(method="post" enctype="multipart/form-data" action="/upload/#{urlSafePath}")
+        input(type="file" name="file_0")
+        br
+        br
+        input(type="submit")
+            
+block page-scripts
+    script(type="text/javascript" src="/js/upload-form.js")

@@ -30,7 +30,14 @@ module.exports = function(app) {
     // STORAGE
     app.get('/files', controllers.storage.getDir);
     app.get('/files/:id', controllers.storage.getDir);
-    app.get('/download/:id', controllers.storage.getFile);
+
+    // FILE TRANSFER
+    app.get('/upload-form', auth.isAuthenticated, controllers.fileTransfer.uploadForm);
+    app.get('/upload-form/:id', auth.isAuthenticated, controllers.fileTransfer.uploadForm);
+    app.post('/upload', auth.isAuthenticated, controllers.fileTransfer.upload);
+    app.post('/upload/:id', auth.isAuthenticated, controllers.fileTransfer.upload);
+    app.get('/download/:id', controllers.fileTransfer.download);
+
 
     // DEFAULT
     app.get('*', function(req, res) {

@@ -10,3 +10,5 @@ files/
 **/desktop.ini
 
 **/*.sublime-*
+*.jpg
+*.png
