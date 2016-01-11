@@ -5,7 +5,8 @@ block main-content
             h3 Path: #{path}
         .row: .col-md-6
             a(href="/files/#{urlSafeParentPath}").btn.btn-default GO UP
-            a(href="/upload-form/#{urlSafePath}").btn.btn-default UPLOAD
+            if (currentUser)
+                a(href="/upload-form/#{urlSafePath}").btn.btn-default UPLOAD
             table.table.table-bordered.table-striped
                     tr
                         th
