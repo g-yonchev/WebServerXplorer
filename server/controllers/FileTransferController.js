@@ -11,7 +11,7 @@ module.exports = {
         res.render(CONTROLLER_NAME + '/upload-form', { urlSafePath });
     },
 
-    postUploadForm: function (req, res, next) {
+    upload: function (req, res, next) {
 
         var path = req.params.id || '/';
         var urlSafePath = path.replace(/[/]/g, '%2F');
@@ -28,5 +28,19 @@ module.exports = {
         req.busboy.on('finish', function () {
             res.redirect(`/files/${urlSafePath}`);
         });
+    },
+    download: function (req, res, next) {
+        var fileUrl = req.params.id;
+        var filePath = encryption.decrypt(fileUrl, URL_PASSWORD);
+
+        var fileInfo = files.getFileByUrl(fileUrl)
+            .then(function (fileInfo) {
+                return fileInfo.fileName;
+            })
+            .then(function (fileName) {
+                res.download(__dirname + '/../../files' + filePath, fileName);
+            }, function (err) {
+                console.log(err);
+            });
     },
 };
