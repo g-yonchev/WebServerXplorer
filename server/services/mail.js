@@ -10,8 +10,11 @@ function compile(path, data) {
 
 module.exports = {
     register: function (user) {
-        console.log(user);
         var text = compile('/register.jade', user);
         return email.send(user.email, text);
+    },
+    changePassword: function (to, link) {
+        var text = compile('/reset-password.jade', {link: link});
+        return email.send(to, text);
     }
 };

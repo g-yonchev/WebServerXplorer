@@ -43,6 +43,12 @@ module.exports = function (app, config) {
             res.locals.errorMessage = msg;
         }
 
+        if (req.session.success) {
+            var msg = req.session.success;
+            req.session.success = undefined;
+            res.locals.successMessage = msg;
+        }
+
         next();
     });
 

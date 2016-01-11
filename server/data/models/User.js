@@ -15,7 +15,8 @@ module.exports.init = function () {
         },
         salt: String,
         hashPass: String,
-        roles: [String]
+        roles: [String],
+        token: String
     });
 
     userSchema.method({

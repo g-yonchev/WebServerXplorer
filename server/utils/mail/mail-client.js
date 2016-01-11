@@ -5,12 +5,14 @@ var server = email.server.connect({
     user: "webxserverxplorer@abv.bg",
     password: "123456sedem",
     host: "smtp.abv.bg",
-    ssl: true
+    ssl: true,
+    port: 465
 });
 
 module.exports = {
     send: function (to, text) {
-        var promise = new Promise(function (resolve, reject) {
+        console.log(to);
+        return new Promise(function (resolve, reject) {
             server.send({
                 text: "",
                 from: "webxserverxplorer@abv.bg",
@@ -28,7 +30,5 @@ module.exports = {
                 resolve('Message sent successfully!')
             });
         });
-
-        return promise;
     }
 };
