@@ -1,6 +1,7 @@
 var fs = require('fs');
+var pathSvc = require('path');
 
-var FILES_DIR = './files';
+var BASE_DIR = './files';
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
         dirName = dirName || '';
 
         try {
-            fs.mkdirSync(FILES_DIR + path + dirName);
+            fs.mkdirSync(BASE_DIR + path + dirName);
         } catch (e) {
             console.log(e);
             if (e.code !== 'EEXIST') {
@@ -19,31 +20,66 @@ module.exports = {
 
     saveFile: function (file, path, filename) {
 
-        if (!fs.existsSync(FILES_DIR + path)) {
+        if (!fs.existsSync(BASE_DIR + path)) {
             this.createDir(path);
         }
 
-        var fstream = fs.createWriteStream(FILES_DIR + path + filename);
+        var fstream = fs.createWriteStream(BASE_DIR + path + filename);
         file.pipe(fstream);
     },
 
-    // returns a list of paths to files and dirs
+    // returns a list of dirs and files
     readDir: function (path) {
-        path = FILES_DIR + path || FILES_DIR;
+
+        path = path || "";
+        fullPath = BASE_DIR + "/" + path;
+        urlSafePath = path.replace(/[/]/g, '%2F');
 
         return new Promise(function (resolve, reject) {
 
-            fs.readdir(path, function (err, contents) {
+            fs.readdir(fullPath, function (err, fileFolders) {
                 if (err) {
                     reject(err);
                     return;
                 }
 
-                contents = contents.map(function (contentName) {
-                    return contentName;
-                });
+                fileFolders = fileFolders
+                    .map(function (itemName) {
+                        return pathSvc.join(fullPath, itemName);
+                    });
 
-                resolve(contents);
+                var files = fileFolders                    
+                    .filter(function (item) {
+                        return fs.statSync(item).isFile();
+                    })
+                    .map(function (file) {
+                        var fileName = pathSvc.basename(file);
+                        return {
+                            name: fileName,
+                            path: `${urlSafePath}%2F${fileName}`
+                        };
+                    });
+                files = files || [];
+
+                var dirs = fileFolders                    
+                    .filter(function (item) {
+                        return !fs.statSync(item).isFile();
+                    })
+                    .map(function (dir) {
+                        var dirName = pathSvc.basename(dir);
+                        return {
+                            name: dirName,
+                            path: `${urlSafePath}%2F${dirName}`        
+                        };
+                    });
+                dirs = dirs || [];
+
+                resolve({
+                    parent: pathSvc.dirname(path).replace(/[/]/g, '%2F'),
+                    path,
+                    dirs,
+                    files
+                });
             });
         });
     }

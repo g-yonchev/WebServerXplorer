@@ -30,7 +30,6 @@ module.exports = {
                             resolve({success: true})
                         })
                         .catch(function (err) {
-                            console.log(err)
                             reject(err)
                         })
                 })

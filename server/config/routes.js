@@ -17,15 +17,25 @@ module.exports = function(app) {
     app.get('/admin/users', controllers.admin.getAllUsers);
     app.get('/admin/user/edit/:id', controllers.admin.editUser);
     
-    app.get('/logout', auth.isAuthenticated, auth.logout);
-
-    app.get('/dir-list-public', controllers.storage.getDirListPublic);
-    
     app.get('/', function (req, res) {
         res.render('index');
     });
 
+    // USERS
+    app.post('/login', auth.login);
+    app.get('/login', controllers.users.getLogin);
+
+    app.get('/logout', auth.isAuthenticated, auth.logout);
+    
+    // STORAGE
+    app.get('/files', controllers.storage.getDir);
+    app.get('/files/:id', controllers.storage.getDir);
+    app.get('/download/:id', controllers.storage.getFile);
+
+    // DEFAULT
     app.get('*', function(req, res) {
         res.render('index');
     });
+
+
 };
