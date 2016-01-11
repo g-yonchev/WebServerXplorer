@@ -35,7 +35,7 @@ module.exports = function (app, config) {
     app.use(express.static(config.rootPath + '/public'));
 
     // CUSTOM MIDDLEWARE
-    
+
     app.use(function (req, res, next) {
         if (req.session.error) {
             var msg = req.session.error;
@@ -43,12 +43,20 @@ module.exports = function (app, config) {
             res.locals.errorMessage = msg;
         }
 
+        if (req.session.success) {
+            var msg = req.session.success;
+            req.session.success = undefined;
+            res.locals.successMessage = msg;
+        }
+
         next();
     });
 
     app.use(function (req, res, next) {
         if (req.user) {
-            res.locals.currentUser = req.user;
+            var user = req.user;
+            user.isAdmin = user.roles.indexOf('admin') > -1;
+            res.locals.currentUser = user;
         }
 
         next();
