@@ -4,8 +4,9 @@ block main-content
         .row
             h3 Path: #{path}
         .row: .col-md-6
-            a(href="/files/#{parent}") GO UP
-            table.table.table-bordered
+            a(href="/files/#{urlSafeParentPath}").btn.btn-default GO UP
+            a(href="/upload-form/#{urlSafePath}").btn.btn-default UPLOAD
+            table.table.table-bordered.table-striped
                     tr
                         th
                             | Name

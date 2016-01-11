@@ -19,6 +19,13 @@ module.exports = function(app) {
     app.get('/files/:id', controllers.storage.getDir);
     app.get('/download/:id', controllers.storage.getFile);
 
+    // FILE TRANSFER
+    app.get('/upload-form', auth.isAuthenticated, controllers.fileTransfer.uploadForm);
+    app.get('/upload-form/:id', auth.isAuthenticated, controllers.fileTransfer.uploadForm);
+    app.post('/upload-form', auth.isAuthenticated, controllers.fileTransfer.postUploadForm);
+    app.post('/upload-form/:id', auth.isAuthenticated, controllers.fileTransfer.postUploadForm);
+
+
     // DEFAULT
     app.get('*', function(req, res) {
         res.render('index');
