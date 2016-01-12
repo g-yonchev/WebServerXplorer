@@ -1,10 +1,23 @@
 var auth = require('./auth'),
     controllers = require('../controllers');
 
-module.exports = function(app) {
+module.exports = function (app) {
+    app.get('/', function (req, res) {
+        res.render('index');
+    });
+
+    //Admin
     app.get('/register', auth.isInRole('admin'), controllers.users.getRegister);
     app.post('/register', auth.isInRole('admin'), controllers.users.postRegister);
 
+    app.get('/admin/users', auth.isInRole('admin'), controllers.admin.getAllUsers);
+
+    app.post('/admin/user/edit/:id', auth.isInRole('admin'), controllers.admin.postEditUser);
+    app.get('/admin/user/edit/:id', auth.isInRole('admin'), controllers.admin.getEditUser);
+
+    app.post('/admin/user/delete/:id', auth.isInRole('admin'), controllers.admin.postDeleteUser);
+
+    // USERS
     app.post('/login', auth.login);
     app.get('/login', controllers.users.getLogin);
 
@@ -14,19 +27,8 @@ module.exports = function(app) {
     app.post('/change-password/:token', controllers.users.postChangePassword);
     app.get('/change-password/:token', controllers.users.getChangePassword);
 
-    app.get('/admin/users', controllers.admin.getAllUsers);
-    app.get('/admin/user/edit/:id', controllers.admin.editUser);
-    
-    app.get('/', function (req, res) {
-        res.render('index');
-    });
-
-    // USERS
-    app.post('/login', auth.login);
-    app.get('/login', controllers.users.getLogin);
-
     app.get('/logout', auth.isAuthenticated, auth.logout);
-    
+
     // STORAGE
     app.get('/files', controllers.storage.getDir);
     app.get('/files/:id', controllers.storage.getDir);
@@ -40,7 +42,7 @@ module.exports = function(app) {
 
 
     // DEFAULT
-    app.get('*', function(req, res) {
+    app.get('*', function (req, res) {
         res.render('index');
     });
 

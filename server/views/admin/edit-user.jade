@@ -6,27 +6,26 @@ block main-content
 
         br
 
-        label(for="email") Username
+        label(for="email") E-mail
         input(id="email", type="email", name="email", placeholder="E-mail", class ="form-control", value="#{user.email}")
 
         br
 
-        label(for="password") Password
-        input(id="password" type="password" name="password" placeholder="password" class ="form-control")
-
-        br
-
-        label(for="confirm-password") Confirm Password
-        input(id="confirm-password" type="password" name="confirmPassword" placeholder="Confirm Password" class ="form-control")
-
-        br
-
-        label(for="role") Role
+        label(for="role") Add role
         select(id="role" name="role" class ="form-control")
+            option(value="")
             option(value="standard") Standard
             option(value="admin") Admin
 
         br
 
-        input(type="submit" value="Register" class="btn btn-lg")
+        label(for="removeRole") Remove role
+        select(id="removeRole" name="removeRole" class ="form-control")
+            option(value="")
+            each role in user.roles
+                option(value=role) #{role.charAt(0).toUpperCase() + role.slice(1)}
+
+        br
+
+        input(type="submit" value="Change" class="btn btn-lg")
 

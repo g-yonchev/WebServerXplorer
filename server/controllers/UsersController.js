@@ -1,5 +1,4 @@
 var users = require('../services/users');
-var mail = require('../services/mail');
 
 var CONTROLLER_NAME = 'users';
 
@@ -12,26 +11,18 @@ module.exports = {
     },
     postRegister: function (req, res) {
         var newUserData = req.body;
-        if (newUserData.password != newUserData.confirmPassword) {
-            req.session.error = 'Passwords do not match';
-            return res.redirect('/register');
-        }
 
-        users.create(newUserData, function (err, user) {
-            if (err) {
+        users.create(newUserData)
+            .then(function (message) {
+                req.session.success = message;
+                res.redirect('/');
+            })
+            .catch(function (err) {
                 req.session.error = 'Failed to register new user.' +
                     ' Perhaps already registered.' +
                     '\r\nerror: ' + err.errmsg;
                 res.redirect('/');
-                return;
-            }
-
-            mail.register(user)
-                .then(function (message) {
-                    req.session.success = message;
-                    res.redirect('/');
-                });
-        });
+            })
     },
     getResetPassword: function (req, res) {
         res.render(`${CONTROLLER_NAME}/reset-password`);
@@ -52,12 +43,10 @@ module.exports = {
     },
     getChangePassword: function (req, res) {
         var userToken = req.params.token;
+
         users.getUserByToken(userToken)
             .then(function (user) {
-                console.log(user);
-                res.render(`${CONTROLLER_NAME}/change-password`, {
-                    id: user._id
-                });
+                res.render(`${CONTROLLER_NAME}/change-password`, {id: user._id});
             })
             .catch(function (err) {
                 req.session.error = 'Something bad happen.' +
@@ -68,7 +57,6 @@ module.exports = {
     postChangePassword: function (req, res) {
         var userData = req.body;
 
-        console.log(userData);
         if (userData.password != userData.confirmPassword) {
             req.session.error = 'Passwords do not match';
             return res.redirect('/change-password/' + req.params.token);
