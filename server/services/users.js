@@ -5,21 +5,25 @@ var Promise = require('bluebird');
 
 
 module.exports = {
-    create: function (user, callback) {
+    create: function (newUserData, callback) {
+        newUserData.salt = encryption.generateSalt();
+        newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
+        newUserData.roles = [];
+        newUserData.roles.push(newUserData.role);
         User.create(user, callback);
     },
     getAll: function () {
         return User.find({});
     },
     getById: function (id) {
-        return User.findOne({_id: id})
+        return User.findOne({_id: id});
     },
     setResetPasswordToken: function (email, link) {
         return new Promise(function (resolve, reject) {
             User.findOne({email: email})
                 .then(function (user) {
                     if (!user) {
-                        reject({success: false})
+                        reject({success: false});
                     }
 
                     user.token = encryption.generateRandomText(20);
@@ -27,12 +31,12 @@ module.exports = {
                     link = link + user.token;
                     mail.changePassword(email, link)
                         .then(function () {
-                            resolve({success: true})
+                            resolve({success: true});
                         })
                         .catch(function (err) {
-                            reject(err)
-                        })
-                })
+                            reject(err);
+                        });
+                });
         });
     },
     getUserByToken: function (token) {
@@ -40,12 +44,12 @@ module.exports = {
             User.findOne({token: token})
                 .then(function (user) {
                     if (!user) {
-                        reject('User does\'t exist!')
+                        reject('User does\'t exist!');
                     }
 
                     resolve(user);
-                })
-        })
+                });
+        });
     },
     changePassword: function (userData) {
         var self = this;
@@ -53,7 +57,7 @@ module.exports = {
             self.getById(userData.id)
                 .then(function (user) {
                     if (!user) {
-                        reject('User does\'t exist!')
+                        reject('User does\'t exist!');
                     }
 
                     user.hashPass = encryption.generateHashedPassword(user.salt, userData.password);
@@ -61,7 +65,7 @@ module.exports = {
                     user.save();
 
                     resolve(user);
-                })
-        })
+                });
+        });
     }
 };

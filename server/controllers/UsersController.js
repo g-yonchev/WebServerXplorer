@@ -13,17 +13,11 @@ module.exports = {
     },
     postRegister: function (req, res) {
         var newUserData = req.body;
-
         if (newUserData.password != newUserData.confirmPassword) {
             req.session.error = 'Passwords do not match';
             return res.redirect('/register');
         }
-
-        newUserData.salt = encryption.generateSalt();
-        newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-        newUserData.roles = [];
-        newUserData.roles.push(newUserData.role);
-
+        
         users.create(newUserData, function (err, user) {
             if (err) {
                 req.session.error = 'Failed to register new user.' +
@@ -37,7 +31,7 @@ module.exports = {
                 .then(function (message) {
                     req.session.success = message;
                     res.redirect('/');
-                })
+                });
         });
     },
     getResetPassword: function (req, res) {
@@ -50,11 +44,11 @@ module.exports = {
         users.setResetPasswordToken(email, link)
             .then(function () {
                 req.session.success = 'Mail have been send to your mailbox';
-                res.redirect('/')
+                res.redirect('/');
             })
             .catch(function () {
                 req.session.error = 'E-mail don\'t exist';
-                res.redirect('/')
+                res.redirect('/');
             });
     },
     getChangePassword: function (req, res) {
@@ -68,7 +62,7 @@ module.exports = {
                 req.session.error = 'Something bad happen.' +
                     '\r\nerror: ' + err;
                 res.redirect('/login');
-            })
+            });
     },
     postChangePassword: function (req, res) {
         var userData = req.body;
@@ -82,7 +76,7 @@ module.exports = {
         users.changePassword(userData)
             .then(function () {
                 req.session.success = 'Password changed!';
-                res.redirect('/login')
+                res.redirect('/login');
             })
             .catch(function (err) {
                 req.session.error = 'Failed to change password.' +

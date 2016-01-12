@@ -8,7 +8,7 @@ module.exports.init = function () {
             require: '{PATH} is required',
             unique: true
         },
-        email:{
+        email: {
             type: String,
             require: '{PATH} is required',
             unique: true
@@ -29,5 +29,5 @@ module.exports.init = function () {
         }
     });
 
-    var User = mongoose.model('user', userSchema);
+    mongoose.model('user', userSchema);
 };
