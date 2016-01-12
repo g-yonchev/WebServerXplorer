@@ -61,7 +61,6 @@ module.exports = {
         var userToken = req.params.token;
         users.getUserByToken(userToken)
             .then(function (user) {
-                console.log(user);
                 res.render(`${CONTROLLER_NAME}/change-password`, {id: user._id});
             })
             .catch(function (err) {
@@ -73,7 +72,6 @@ module.exports = {
     postChangePassword: function (req, res) {
         var userData = req.body;
 
-        console.log(userData);
         if (userData.password != userData.confirmPassword) {
             req.session.error = 'Passwords do not match';
             return res.redirect('/change-password/' + req.params.token);

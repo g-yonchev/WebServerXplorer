@@ -15,8 +15,10 @@ module.exports = function(app) {
     app.get('/change-password/:token', controllers.users.getChangePassword);
 
     app.get('/admin/users', controllers.admin.getAllUsers);
-    app.get('/admin/user/edit/:id', controllers.admin.editUser);
-    
+
+    app.post('/admin/user/edit/:id', controllers.admin.postEditUser);
+    app.get('/admin/user/edit/:id', controllers.admin.getEditUser);
+
     app.get('/', function (req, res) {
         res.render('index');
     });

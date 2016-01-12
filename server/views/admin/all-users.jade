@@ -4,16 +4,28 @@ block main-content
     table.table.table-bordered.table-striped.table-hover
         tr.warning
             th
-                | User
+                | User name
+            th
+                |Email
+            th
+                | Roles
             th
                 | Edit
+            th
+                | Delete
 
         - var i = -1
         each user in users
             - ++i
             tr(class=(i % 2) ? '' : 'info')
-                td
-                    | #{user.email}
 
                 td
+                    | #{user.username}
+                td
+                    | #{user.email}
+                td
+                    | #{user.roles.join(', ')}
+                td
                     a.glyphicon.glyphicon-search(href="/admin/user/edit/" + user._id)
+                td
+                    a.glyphicon.glyphicon-trash(href="/admin/user/delete/" + user._id)
