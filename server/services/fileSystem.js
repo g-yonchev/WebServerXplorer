@@ -18,11 +18,29 @@ module.exports = {
         }
     },
 
-    saveFile: function (file, path, filename) {
+    saveFile: function (file, path, filename) {var fullPath = pathSvc.join(BASE_DIR, path);
+        fullPath = pathSvc.join(fullPath, filename);
 
-        fullPath = BASE_DIR + "/" + path;
-        var fstream = fs.createWriteStream(fullPath + '/' + filename);
-        file.pipe(fstream);
+        return new Promise(function (resolve, reject) {
+            fs.stat(fullPath, function (err, stats) {
+
+                if (stats) {
+                    reject(`File ${filename} exists! This file was not uploaded!`);
+                }
+
+                var fstream = fs.createWriteStream(fullPath);
+                file.pipe(fstream);
+
+                file.on('end', function () {
+                    resolve(`File ${filename} saved!`);
+                });
+
+                fstream.on('error', function (err) {
+                    reject(err);
+                });
+            });
+
+        });
     },
 
     // returns a list of dirs and files
