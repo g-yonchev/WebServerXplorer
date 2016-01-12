@@ -20,20 +20,21 @@ module.exports = {
 
     saveFile: function (file, path, filename) {
 
-        if (!fs.existsSync(BASE_DIR + path)) {
-            this.createDir(path);
-        }
-
-        var fstream = fs.createWriteStream(BASE_DIR + path + filename);
+        fullPath = BASE_DIR + "/" + path;
+        var fstream = fs.createWriteStream(fullPath + '/' + filename);
         file.pipe(fstream);
     },
 
     // returns a list of dirs and files
     readDir: function (path) {
 
-        path = path || "";
-        fullPath = BASE_DIR + "/" + path;
-        urlSafePath = path.replace(/[/]/g, '%2F');
+        path = path || '';
+        if (path === '/') {
+            path = '';
+        }
+
+        var fullPath = BASE_DIR + path;
+        var urlSafePath = path.replace(/[/]/g, '%2F');
 
         return new Promise(function (resolve, reject) {
 
@@ -74,9 +75,11 @@ module.exports = {
                     });
                 dirs = dirs || [];
 
+
                 resolve({
-                    parent: pathSvc.dirname(path).replace(/[/]/g, '%2F'),
-                    path,
+                    urlSafeParentPath: pathSvc.dirname(path).replace(/[/]/g, '%2F'),
+                    urlSafePath,
+                    path: path || '/',
                     dirs,
                     files
                 });

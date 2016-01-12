@@ -5,14 +5,14 @@ var CONTROLLER_NAME = 'storage';
 
 module.exports = {
     getDir: function (req, res, next) {
-        // todo: check if user is registered
-        var urlSafePath = req.params.id || '';
-        if (urlSafePath === '' && !req.user) {
-            urlSafePath = 'public';
+        var path = req.params.id || '/';
+        if (path === '/' && !req.user) {
+            path = '/public';
         }
 
-        var path = urlSafePath.replace(/%2F|%20/g, '/');
-        fsSvc.readDir(`${path}`)
+        // var path = urlSafePath.replace(/%2F/g, '/');
+        // path = path.replace(/%20/g, ' ');
+        fsSvc.readDir(path)
             .then(function (filesAndFolders) {
                 res.render(`${CONTROLLER_NAME}/dir-list`, filesAndFolders);
             }, function (err) {
