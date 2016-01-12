@@ -37,14 +37,21 @@ module.exports = function (app, config) {
     // CUSTOM MIDDLEWARE
 
     app.use(function (req, res, next) {
+        var msg;
+
+        console.log(req.session);
+        
         if (req.session.error) {
-            var msg = req.session.error;
+            msg = req.session.error;
             req.session.error = undefined;
             res.locals.errorMessage = msg;
         }
 
         if (req.session.success) {
-            var msg = req.session.success;
+            msg = req.session.success;
+       
+            console.log(msg);
+
             req.session.success = undefined;
             res.locals.successMessage = msg;
         }
