@@ -16,7 +16,7 @@ module.exports = {
             req.session.error = 'Passwords do not match';
             return res.redirect('/register');
         }
-        
+
         users.create(newUserData, function (err, user) {
             if (err) {
                 req.session.error = 'Failed to register new user.' +
@@ -31,6 +31,7 @@ module.exports = {
                     req.session.success = message;
                     res.redirect('/');
                 });
+        });
     },
     getResetPassword: function (req, res) {
         res.render(`${CONTROLLER_NAME}/reset-password`);
@@ -54,7 +55,9 @@ module.exports = {
         users.getUserByToken(userToken)
             .then(function (user) {
                 console.log(user);
-                res.render(`${CONTROLLER_NAME}/change-password`, {id: user._id});
+                res.render(`${CONTROLLER_NAME}/change-password`, {
+                    id: user._id
+                });
             })
             .catch(function (err) {
                 req.session.error = 'Something bad happen.' +
