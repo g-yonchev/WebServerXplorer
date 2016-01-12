@@ -18,9 +18,7 @@ module.exports = {
         }
     },
 
-    saveFile: function (file, path, filename) {
-
-        var fullPath = pathSvc.join(BASE_DIR, path);
+    saveFile: function (file, path, filename) {var fullPath = pathSvc.join(BASE_DIR, path);
         fullPath = pathSvc.join(fullPath, filename);
 
         return new Promise(function (resolve, reject) {
@@ -43,7 +41,6 @@ module.exports = {
             });
 
         });
-
     },
 
     // returns a list of dirs and files

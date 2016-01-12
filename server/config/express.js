@@ -38,8 +38,6 @@ module.exports = function (app, config) {
 
     app.use(function (req, res, next) {
         var msg;
-
-        console.log(req.session);
         
         if (req.session.error) {
             msg = req.session.error;

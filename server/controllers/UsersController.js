@@ -1,4 +1,3 @@
-var encryption = require('../services/encryption');
 var users = require('../services/users');
 var mail = require('../services/mail');
 
@@ -32,7 +31,6 @@ module.exports = {
                     req.session.success = message;
                     res.redirect('/');
                 });
-        });
     },
     getResetPassword: function (req, res) {
         res.render(`${CONTROLLER_NAME}/reset-password`);

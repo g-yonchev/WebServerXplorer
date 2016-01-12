@@ -14,9 +14,7 @@ module.exports = {
         });
     },
 
-    upload: function (req, res, next) {
-
-        var path = req.params.id || '/';
+    upload: function (req, res, next) {var path = req.params.id || '/';
         var urlSafePath = path.replace(/[/]/g, '%2F');
         var username = req.user.username;
         var files = [];
