@@ -3,7 +3,6 @@ var encryption = require('../services/encryption');
 var mail = require('./mail');
 var Promise = require('bluebird');
 
-
 module.exports = {
     create: function (user, callback) {
         User.create(user, callback);
