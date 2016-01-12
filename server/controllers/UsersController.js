@@ -1,5 +1,4 @@
 var users = require('../services/users');
-var mail = require('../services/mail');
 
 var CONTROLLER_NAME = 'users';
 
@@ -35,15 +34,16 @@ module.exports = {
         users.setResetPasswordToken(email, link)
             .then(function () {
                 req.session.success = 'Mail have been send to your mailbox';
-                res.redirect('/')
+                res.redirect('/');
             })
             .catch(function () {
                 req.session.error = 'E-mail don\'t exist';
-                res.redirect('/')
+                res.redirect('/');
             });
     },
     getChangePassword: function (req, res) {
         var userToken = req.params.token;
+
         users.getUserByToken(userToken)
             .then(function (user) {
                 res.render(`${CONTROLLER_NAME}/change-password`, {id: user._id});
@@ -52,7 +52,7 @@ module.exports = {
                 req.session.error = 'Something bad happen.' +
                     '\r\nerror: ' + err;
                 res.redirect('/login');
-            })
+            });
     },
     postChangePassword: function (req, res) {
         var userData = req.body;
@@ -65,7 +65,7 @@ module.exports = {
         users.changePassword(userData)
             .then(function () {
                 req.session.success = 'Password changed!';
-                res.redirect('/login')
+                res.redirect('/login');
             })
             .catch(function (err) {
                 req.session.error = 'Failed to change password.' +

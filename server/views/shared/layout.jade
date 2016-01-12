@@ -43,10 +43,10 @@ html
 
         .container
             if (errorMessage)
-                div.alert.alert-danger #{errorMessage}
+                div.alert.alert-danger !{errorMessage}
 
             if (successMessage)
-                div.alert.alert-success #{successMessage}
+                div.alert.alert-success !{successMessage}
 
             block main-content
 

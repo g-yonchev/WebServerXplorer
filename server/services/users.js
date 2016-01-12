@@ -44,7 +44,7 @@ module.exports = {
             User.findOne({email: email})
                 .then(function (user) {
                     if (!user) {
-                        reject({success: false})
+                        reject({success: false});
                     }
 
                     user.token = encryption.generateRandomText(20);
@@ -52,7 +52,7 @@ module.exports = {
                     link = link + user.token;
                     mail.changePassword(email, link)
                         .then(function () {
-                            resolve({success: true})
+                            resolve({success: true});
                         })
                         .catch(function (err) {
                             reject(err)
@@ -65,7 +65,7 @@ module.exports = {
             User.findOne({token: token})
                 .then(function (user) {
                     if (!user) {
-                        reject('User does\'t exist!')
+                        reject('User does\'t exist!');
                     }
 
                     resolve(user);
@@ -77,6 +77,7 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             self.getById(userData.id)
                 .then(function (user) {
+
                     user.hashPass = encryption.generateHashedPassword(user.salt, userData.password);
                     user.token = undefined;
                     user.save();
