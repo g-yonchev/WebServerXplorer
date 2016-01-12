@@ -77,12 +77,12 @@ module.exports = {
                 .then(function (user) {
                     user.email = userData.email || userData.email;
                     user.username = userData.username || userData.username;
-                    if(userData.role && user.roles.indexOf(userData.role) < 0 ){
+                    if (userData.role && user.roles.indexOf(userData.role) < 0) {
                         user.roles.push(userData.role);
                     }
 
                     var roleIndex = user.roles.indexOf(userData.removeRole);
-                    if(userData.removeRole && roleIndex  > -1 ){
+                    if (userData.removeRole && roleIndex > -1) {
                         user.roles.splice(roleIndex, 1);
                     }
 
@@ -92,6 +92,17 @@ module.exports = {
                 .catch(function (err) {
                     reject(err);
                 })
+        });
+    },
+    delete: function (id) {
+        return new Promise(function (resolve, reject) {
+            User.remove({_id: id}, function (err, remove) {
+                if(err){
+                    reject(err);
+                }
+
+                resolve(remove)
+            })
         });
     }
 };

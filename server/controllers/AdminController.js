@@ -19,7 +19,7 @@ module.exports = {
     postEditUser: function (req, res) {
         var id = req.params.id,
             userData = req.body;
-        console.log(userData);
+
         users.edit(id, userData)
             .then(function (user) {
                 res.redirect(`/${CONTROLLER_NAME}/users`);
@@ -27,5 +27,18 @@ module.exports = {
             .catch(function (err) {
                 res.render(`${CONTROLLER_NAME}/edit-user`, {user: user});
             });
+    },
+    postDeleteUser: function (req, res) {
+        var id = req.params.id;
+
+        users.delete(id)
+            .then(function () {
+                res.sendStatus(204)
+            })
+            .catch(function (err) {
+                res.sendStatus(404)
+                    .send(err);
+            });
+        res.sendStatus(204)
     }
 };

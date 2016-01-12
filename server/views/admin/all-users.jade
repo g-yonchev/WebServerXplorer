@@ -1,12 +1,12 @@
 extends ../shared/layout
 block main-content
 
-    table.table.table-bordered.table-striped.table-hover
+    table#user-table.table.table-bordered.table-striped.table-hover
         tr.warning
             th
                 | User name
             th
-                |Email
+                | Email
             th
                 | Roles
             th
@@ -17,7 +17,7 @@ block main-content
         - var i = -1
         each user in users
             - ++i
-            tr(class=(i % 2) ? '' : 'info')
+            tr(class=(i % 2) ? 'user-row' : 'info user-row')
 
                 td
                     | #{user.username}
@@ -28,4 +28,8 @@ block main-content
                 td
                     a.glyphicon.glyphicon-search(href="/admin/user/edit/" + user._id)
                 td
-                    a.glyphicon.glyphicon-trash(href="/admin/user/delete/" + user._id)
+                    a(href="#")
+                        span.confirmation.glyphicon.glyphicon-trash(data-url="/admin/user/delete/" + user._id, data-username="#{user.username}")
+
+block page-scripts
+    script(type="text/javascript" src="/js/confirm.js")
