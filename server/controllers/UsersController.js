@@ -1,4 +1,3 @@
-var encryption = require('../services/encryption');
 var users = require('../services/users');
 var mail = require('../services/mail');
 
@@ -14,31 +13,17 @@ module.exports = {
     postRegister: function (req, res) {
         var newUserData = req.body;
 
-        if (newUserData.password != newUserData.confirmPassword) {
-            req.session.error = 'Passwords do not match';
-            return res.redirect('/register');
-        }
-
-        newUserData.salt = encryption.generateSalt();
-        newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-        newUserData.roles = [];
-        newUserData.roles.push(newUserData.role);
-
-        users.create(newUserData, function (err, user) {
-            if (err) {
+        users.create(newUserData)
+            .then(function (message) {
+                req.session.success = message;
+                res.redirect('/');
+            })
+            .catch(function (err) {
                 req.session.error = 'Failed to register new user.' +
                     ' Perhaps already registered.' +
                     '\r\nerror: ' + err.errmsg;
                 res.redirect('/');
-                return;
-            }
-
-            mail.register(user)
-                .then(function (message) {
-                    req.session.success = message;
-                    res.redirect('/');
-                })
-        });
+            })
     },
     getResetPassword: function (req, res) {
         res.render(`${CONTROLLER_NAME}/reset-password`);

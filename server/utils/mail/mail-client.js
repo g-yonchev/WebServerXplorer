@@ -18,7 +18,6 @@ var transporter = nodemailer.createTransport(smtpPool({
 
 module.exports = {
     send: function (to, text) {
-        console.log(to);
         return new Promise(function (resolve, reject) {
             transporter.sendMail({
                 from: 'webxserverxplorer@abv.bg',

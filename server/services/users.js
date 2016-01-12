@@ -3,8 +3,26 @@ var encryption = require('../services/encryption');
 var mail = require('./mail');
 
 module.exports = {
-    create: function (user, callback) {
-        User.create(user, callback);
+    create: function (userData) {
+        return new Promise(function (resolve, reject) {
+
+            userData.salt = encryption.generateSalt();
+            userData.password = encryption.generateRandomText(5);
+            userData.hashPass = encryption.generateHashedPassword(userData.salt, userData.password);
+            userData.roles = [];
+            userData.roles.push(userData.role);
+
+            User.create(userData, function (err, user) {
+                if (err) {
+                    reject(err)
+                }
+
+                mail.register(userData)
+                    .then(function (message) {
+                        resolve(message);
+                    });
+            });
+        });
     },
     getAll: function () {
         return User.find({});
@@ -97,7 +115,7 @@ module.exports = {
     delete: function (id) {
         return new Promise(function (resolve, reject) {
             User.remove({_id: id}, function (err, remove) {
-                if(err){
+                if (err) {
                     reject(err);
                 }
 
