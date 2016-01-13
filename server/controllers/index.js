@@ -2,7 +2,7 @@ var UsersController = require('./UsersController');
 var StorageController = require('./StorageController');
 var FileTransferController = require('./FileTransferController');
 var AdminController = require('./AdminController');
-var StatisticsController = require('./StatisticsController')
+var StatisticsController = require('./StatisticsController');
 
 module.exports = {
     users: UsersController,

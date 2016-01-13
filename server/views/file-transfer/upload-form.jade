@@ -1,14 +1,18 @@
 extends ../shared/layout
 
 block main-content
-    button#add-input-file More files
-    br
-    br
-    form#form-upload(method="post" enctype="multipart/form-data" action="/upload/#{urlSafePath}")
-        input(type="file" name="file_0")
+    .container(ng-controller="UploadController as vm")
+        button(ng-click="vm.addFile()") More files
         br
         br
-        input(type="submit")
+        form#form-upload(method="post" enctype="multipart/form-data" action="/upload/#{urlSafePath}")
+            input(type="file" name="file_0")
+            br
+            br
+            input(type="submit")
             
 block page-scripts
-    script(type="text/javascript" src="/js/upload-form.js")
+    script(src="/lib/anguar/angular.min.js")
+    script(src="/js/angular/app.js")
+    script(src="/js/angular/common/data.js")
+    script(src="/js/angular/upload/upload-form-controller.js")
