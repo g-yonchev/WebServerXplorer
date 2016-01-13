@@ -27,6 +27,11 @@ module.exports = {
     getAll: function () {
         return User.find({});
     },
+    getLastFive: function(){
+      return User.find({})
+          .sort([['_id', -1]])
+          .limit(5);
+    },
     getById: function (id) {
         return new Promise(function (resolve, reject) {
             User.findOne({_id: id})

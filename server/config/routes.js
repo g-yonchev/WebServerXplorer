@@ -40,7 +40,8 @@ module.exports = function (app) {
     app.post('/upload/:id', auth.isAuthenticated, controllers.fileTransfer.upload);
     app.get('/download/:id', controllers.fileTransfer.download);
 
-
+    //STATISTICS
+    app.get('/statistics', controllers.statistics.getStatistics);
     // DEFAULT
     app.get('*', function (req, res) {
         res.render('index');
