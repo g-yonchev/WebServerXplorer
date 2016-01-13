@@ -21,8 +21,6 @@ block main-content
                         li {{role}}
 
 block page-scripts
-    script(src="/lib/anguar/angular.min.js")
-    script(src="/js/angular/app.js")
-    script(src="/js/angular/common/data.js")
+    include shared/angular-common
     script(src="/js/angular/statistics/statistics-service.js")
     script(src="/js/angular/statistics/statistics-controller.js")

@@ -12,7 +12,5 @@ block main-content
             input(type="submit")
             
 block page-scripts
-    script(src="/lib/anguar/angular.min.js")
-    script(src="/js/angular/app.js")
-    script(src="/js/angular/common/data.js")
+    include ../shared/angular-common
     script(src="/js/angular/upload/upload-form-controller.js")
