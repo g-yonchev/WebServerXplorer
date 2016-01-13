@@ -10,8 +10,12 @@ module.exports = {
             path = '/public';
         }
 
-        // var path = urlSafePath.replace(/%2F/g, '/');
-        // path = path.replace(/%20/g, ' ');
+        if (!req.user && path.indexOf('/public') !== 0) {
+            path = '/public';
+            req.session.error = 'Unauthorized request!';
+            return res.redirect('/login');
+        }
+
         fsSvc.readDir(path)
             .then(function (filesAndFolders) {
                 res.render(`${CONTROLLER_NAME}/dir-list`, filesAndFolders);
@@ -20,12 +24,4 @@ module.exports = {
                  res.redirect('/');
             });
     },
-    getFile: function (req, res, next) {
-        res.writeHead(200, {
-            'Content-Type': 'text/html'
-        });
-        res.end(`<html><head></head><body>
-               <h1>File download functionality not added yet!</h1>
-            </body></html>`);
-    }
 };
