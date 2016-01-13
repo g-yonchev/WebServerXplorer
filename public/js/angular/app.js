@@ -1,9 +1,7 @@
 (function () {
     'use strict';
 
-    function config($routeProvider) {
-        var PARTIALS_PREFIX = 'views/partials/';
-        var CONTROLLER_AS_VIEW_MODEL = 'vm';
+    function config() {
     }
 
     angular.module('myApp.services', []);
