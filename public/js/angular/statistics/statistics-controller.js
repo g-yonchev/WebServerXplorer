@@ -9,11 +9,11 @@
                 .then(function (stats) {
                     vm.stats = stats;
                 });
-        }
+        };
 
         vm.loadStatistics();
     }
 
     angular.module('myApp.controllers')
         .controller('StatisticsController', ['statistics', StatisticsController]);
-}())
+}());
