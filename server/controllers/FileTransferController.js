@@ -23,7 +23,7 @@ module.exports = {
 
         req.busboy.on('file', function (fieldname, file, filename) {
 
-            filename = filename.replace(/%20/g, ' ');
+            filename = filename.replace(/%/g, '_');
 
             fsSvc.saveFile(file, path, filename)
                 .then(function (msg) {
